@@ -1,0 +1,23 @@
+/* Add your custom styles here */
+
+body {
+    padding-bottom: 60px; /* Adjust based on the height of your footer */
+}
+
+/* Add a switch for light and dark themes */
+.switch-theme {
+    cursor: pointer;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 24px;
+}
+
+/* Dark theme styles */
+body.dark-theme {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Update the styles based on your preferences */
