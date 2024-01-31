@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,102 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python FastAPI To Do with Jinja2 Template</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
     <!-- Add Font Awesome for the theme switch icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
         integrity="sha384-hBdXBRiZLO3NcJItgTzWJ+32URJ60cFUYxvxFh+PJ6evwFtZcQqzSz1EZN8I2hoA" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="bg-gray-200">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">To-Do App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
+    <nav class="bg-gray-900 text-white">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a class="text-2xl font-bold" href="#">To-Do App</a>
+                <button class="block lg:hidden focus:outline-none" type="button">
+                    <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd"
+                            d="M3 5h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2zm0 6h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2zm0 6h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2z">
+                        </path>
+                    </svg>
+                </button>
+                <div class="hidden lg:flex lg:items-center lg:justify-end lg:flex-1">
+                    <a class="mr-4" href="#">Home</a>
+                    <a class="mr-4" href="#">About</a>
+                    <a href="#">Contact</a>
+                </div>
             </div>
         </div>
     </nav>
 
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-lg-9 col-xl-7">
-        <div class="card rounded-3">
-          <div class="card-body p-4">
- 
-            <h4 class="text-center my-3 pb-3">Insert Your To do Tasks</h4>
-            <form class="row" action="/add" method="post">
-              <div class="col-4">
-                <div class="form-outline">
-                  <input type="text" id="title" name="title" class="form-control" placeholder="Enter a task here"/>
-                </div>
-              </div>
- 
-              <div class="col-6">
-                <button type="submit" class="btn btn-primary">Save</button>
-              </div>
-            </form>
- 
-            <table class="table mb-4">
-                <thead>
-                    <tr>
-                      <th scope="col">No.</th>
-                      <th scope="col">Todo item</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for todo in todo_list %}
-                    <tr>
-                      <th scope="row">{{todo.id }}</th>
-                      <td>{{ todo.title }}</td>
-                      <td>
-                        {% if todo.completed == False %}
-                        <div class="alert alert-secondary" role="alert">In progress</div>
-                        {% else %}
-                        <div class="alert alert-success" role="alert">Completed</div>
-                        {% endif %}
-                      </td>
-                      <td>
-                        <a class="btn btn-success" href="/update/{{ todo.id }}">Update</a>
-                        <a class="btn btn-danger ms-1" href="/delete/{{ todo.id }}">Delete</a>
-                      </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-          </div>
+    <section class="min-h-screen flex justify-center items-center bg-gray-200">
+        <div class="container py-5">
+            <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+                <h4 class="text-center my-3 pb-3 text-lg font-semibold">Insert Your To do Tasks</h4>
+                <form class="flex space-x-4" action="/add" method="post">
+                    <div class="flex-1">
+                        <input type="text" id="title" name="title" class="w-full border rounded-md px-4 py-2"
+                            placeholder="Enter a task here" />
+                    </div>
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                        Save
+                    </button>
+                </form>
+
+                <table class="table mb-4 w-full mt-4">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2">#</th>
+                            <th class="px-4 py-2">Todo item</th>
+                            <th class="px-4 py-2">Status</th>
+                            <th class="px-4 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for todo in todo_list %}
+                        <tr>
+                            <td class="border px-4 py-2">{{todo.id }}</td>
+                            <td class="border px-4 py-2">{{ todo.title }}</td>
+                            <td class="border px-4 py-2">
+                                {% if todo.completed == False %}
+                                <div class="bg-gray-200 text-gray-700 px-2 py-1 rounded-md">In progress</div>
+                                {% else %}
+                                <div class="bg-green-200 text-green-700 px-2 py-1 rounded-md">Completed</div>
+                                {% endif %}
+                            </td>
+                            <td class="border px-4 py-2">
+                                <a class="px-4 py-1 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                    href="/update/{{ todo.id }}">Update</a>
+                                <a class="px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 ms-1"
+                                    href="/delete/{{ todo.id }}">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <!-- Footer -->
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">© 2024 To Do App Website</span>
+    <footer class="bg-gray-100 py-3">
+        <div class="container mx-auto text-center">
+            <span class="text-gray-600">© 2024 To Do App Website</span>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-</html>  
+
+</html>
